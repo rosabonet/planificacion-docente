@@ -1,0 +1,21 @@
+{
+  "name": "Planificador Docente",
+  "short_name": "Planificador",
+  "description": "Planificador para organizar tus clases y actividades",
+  "start_url": "https://usuario.github.io/planificador-docente/",  // Reemplaza con tu URL de hosting
+  "display": "standalone",  // Esto hará que se vea como una app nativa sin barra de direcciones
+  "background_color": "#ffffff",  // Color de fondo al cargar la app
+  "theme_color": "#4CAF50",  // Color principal de la app, puede ser el color de tu marca
+  "icons": [
+    {
+      "src": "icono.png",  // Ruta a tu icono de la aplicación
+      "sizes": "192x192",  // Tamaño del icono
+      "type": "image/png"  // Tipo de imagen
+    },
+    {
+      "src": "icono.png",  // Ruta al mismo icono pero de mayor tamaño
+      "sizes": "512x512",  // Tamaño más grande del icono
+      "type": "image/png"  // Tipo de imagen
+    }
+  ]
+}
