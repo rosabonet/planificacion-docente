@@ -2,33 +2,129 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Planificador Docente Completo</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
+  <title>Planificación Unidad de Aprendizaje</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    textarea, input, select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    label {
+      font-weight: bold;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Planificador Docente</h1>
+  <h1>📝 Esquema de Planificación - Unidad de Aprendizaje</h1>
 
   <form id="planForm">
-    <input type="text" placeholder="Asignatura" required>
-    <input type="date" required>
-    <textarea placeholder="Inicio (actividades iniciales)" required></textarea>
-    <textarea placeholder="Desarrollo (actividades de desarrollo)" required></textarea>
-    <textarea placeholder="Cierre (actividades de cierre)" required></textarea>
-    <textarea placeholder="Evidencias de aprendizaje" required></textarea>
-    <textarea placeholder="Instrumentos de evaluación" required></textarea>
-    <textarea placeholder="Metacognición" required></textarea>
-    <textarea placeholder="Recursos" required></textarea>
-    <button type="submit">Guardar planificación</button>
+    <label>Centro Educativo</label><input type="text" id="centro">
+    <label>Título Unidad de Aprendizaje</label><input type="text" id="titulo">
+    <label>Regional</label><input type="text" id="regional">
+    <label>Grado</label><input type="text" id="grado">
+    <label>Sección</label><input type="text" id="seccion">
+    <label>Distrito</label><input type="text" id="distrito">
+    <label>Eje Temático</label><input type="text" id="eje">
+    <label>Situación de Aprendizaje</label><textarea id="situacion"></textarea>
+    <label>Asignatura</label><input type="text" id="asignatura">
+    <label>Competencias fundamentales</label><textarea id="competencias_f"></textarea>
+    <label>Competencias específicas</label><textarea id="competencias_e"></textarea>
+    <label>Contenidos</label><textarea id="contenidos"></textarea>
+    <label>Conceptos</label><textarea id="conceptos"></textarea>
+    <label>Procedimientos</label><textarea id="procedimientos"></textarea>
+    <label>Actitudes y valores</label><textarea id="actitudes"></textarea>
+    <label>Ejes transversales</label>
+    <textarea id="ambiental" placeholder="Ambiental y de Salud"></textarea>
+    <textarea id="cientifica" placeholder="Científica y tecnológica"></textarea>
+    <textarea id="comunicativa" placeholder="Comunicativa"></textarea>
+    <textarea id="pensamiento" placeholder="Pensamiento lógico, crítico y creativo"></textarea>
+
+    <h3>Secuencia Didáctica</h3>
+    <label>1. Recuperación de saberes previos</label>
+    <input type="date"><textarea placeholder="Actividades de aprendizaje"></textarea>
+    <textarea placeholder="Evidencias de aprendizaje"></textarea>
+    <textarea placeholder="Instrumentos de evaluación"></textarea>
+    <textarea placeholder="Metacognición"></textarea>
+    <textarea placeholder="Recursos"></textarea>
+    <textarea placeholder="Indicadores de logro"></textarea>
+
+    <label>2. Búsqueda y análisis de información documentada</label>
+    <input type="date"><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea>
+
+    <label>3. Producción de la exposición</label>
+    <input type="date"><textarea></textarea>
+
+    <label>4. Exposición de los estudiantes</label>
+    <input type="date"><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea>
+
+    <label>5. Reflexión metacognitiva</label>
+    <input type="date"><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea>
+
+    <label>6. Sistematización</label>
+    <input type="date"><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea>
   </form>
 
-  <h2>Planificaciones guardadas</h2>
-  <div id="resultado"></div>
+  <button onclick="imprimir()">🖨️ Imprimir</button>
+  <button onclick="guardarComoPDF()">📄 Guardar como PDF</button>
+  <button onclick="guardarComoWord()">📝 Guardar como Word</button>
 
-  <button onclick="generarPDF()">Exportar a PDF</button>
+  <hr>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <h2>📚 Subir y ver Currículo</h2>
+  <input type="file" id="archivoPDF" accept=".pdf" onchange="mostrarPDF(event)">
+  <iframe id="visorPDF" src=""></iframe>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="app.js"></script>
+  <script>
+    function imprimir() {
+      window.print();
+    }
+
+    function guardarComoPDF() {
+      const form = document.getElementById("planForm");
+      html2pdf().from(form).save("planificacion.pdf");
+    }
+
+    function guardarComoWord() {
+      const contenido = document.getElementById("planForm").innerHTML;
+      const blob = new Blob(['<html><body>' + contenido + '</body></html>'], {
+        type: 'application/msword'
+      });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'planificacion.doc';
+      link.click();
+    }
+
+    function mostrarPDF(event) {
+      const file = event.target.files[0];
+      if (file && file.type === "application/pdf") {
+        const visor = document.getElementById("visorPDF");
+        visor.src = URL.createObjectURL(file);
+      } else {
+        alert("Por favor selecciona un archivo PDF válido.");
+      }
+    }
+  </script>
 </body>
 </html>
